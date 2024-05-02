@@ -1,0 +1,179 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API Pengeluaran",
+      "version": "1.0.0",
+      "description": "API untuk mengelola data pengeluaran dengan metode CRUD"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:8080/api/expenses"
+      }
+    ],
+    "paths": {
+      "/": {
+        "post": {
+          "summary": "Create Expense",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Expense"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Pengeluaran berhasil dibuat",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Expense"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Permintaan tidak valid"
+            }
+          }
+        },
+        "get": {
+          "summary": "Get All Expenses",
+          "responses": {
+            "200": {
+              "description": "Daftar semua pengeluaran",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Expense"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/{id}": {
+        "get": {
+          "summary": "Get Expense by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Informasi pengeluaran berdasarkan ID",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Expense"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Pengeluaran tidak ditemukan"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update Expense",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Expense"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Pengeluaran berhasil diperbarui",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Expense"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Permintaan tidak valid"
+            },
+            "404": {
+              "description": "Pengeluaran tidak ditemukan"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Expense",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Pengeluaran berhasil dihapus"
+            },
+            "404": {
+              "description": "Pengeluaran tidak ditemukan"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Expense": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "readOnly": true
+            },
+            "expenseamount": {
+              "type": "number"
+            },
+            "expensedate": {
+              "type": "string",
+              "format": "date"
+            },
+            "expensecategory": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+  
